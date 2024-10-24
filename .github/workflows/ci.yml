@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,7 +24,8 @@ jobs:
         run: echo $HEROKU_API_KEY | heroku auth:token --quiet > ~/.netrc
 
       - name: Add Heroku remote
-        run: heroku git:remote -a simple-node-app-deployment
+        run: |
+          git remote add heroku https://git.heroku.com/simple-node-app-deployment.git
 
       - name: Deploy to Heroku
         run: git push heroku main
