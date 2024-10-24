@@ -1,19 +1,20 @@
-# .github/workflows/deployment-event.yml
-name: Deployment Event Trigger
+# .github/workflows/deployment-status.yml
+name: Deployment Status Trigger
 
 on:
-  deployment:
+  deployment_status:
+    types: [success]
 
 jobs:
-  handle-deployment:
+  post-deployment:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
 
-      - name: Handle Deployment
+      - name: Post-Deployment Tasks
         run: |
-          echo "A deployment event has been triggered."
-          echo "Handling deployment for ref: ${{ github.event.deployment.ref }}"
-          echo "Environment: ${{ github.event.deployment.environment }}"
+          echo "The deployment was successful."
+          echo "Performing post-deployment tasks for environment: ${{ github.event.deployment_status.environment }}"
+          echo "Deployment description: ${{ github.event.deployment_status.description }}"
