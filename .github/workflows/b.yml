@@ -1,0 +1,19 @@
+# .github/workflows/deployment-event.yml
+name: Deployment Event Trigger
+
+on:
+  deployment:
+
+jobs:
+  handle-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Handle Deployment
+        run: |
+          echo "A deployment event has been triggered."
+          echo "Handling deployment for ref: ${{ github.event.deployment.ref }}"
+          echo "Environment: ${{ github.event.deployment.environment }}"
