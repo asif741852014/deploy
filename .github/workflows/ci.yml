@@ -1,0 +1,30 @@
+# .github/workflows/deploy-to-heroku.yml
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Set up Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Log in to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: echo $HEROKU_API_KEY | heroku auth:token --quiet > ~/.netrc
+
+      - name: Add Heroku remote
+        run: heroku git:remote -a simple-node-app-deployment
+
+      - name: Deploy to Heroku
+        run: git push heroku main
