@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all history to avoid shallow clone issues
 
       - name: Set up Heroku CLI
         run: |
