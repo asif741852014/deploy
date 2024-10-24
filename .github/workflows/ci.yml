@@ -18,14 +18,15 @@ jobs:
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Log in to Heroku
+      - name: Authenticate with Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: echo $HEROKU_API_KEY | heroku auth:token --quiet > ~/.netrc
+        run: |
+          echo "machine git.heroku.com login heroku password $HEROKU_API_KEY" > ~/.netrc
 
       - name: Add Heroku remote
         run: |
           git remote add heroku https://git.heroku.com/simple-node-app-deployment.git
 
-      - name: Deploy to Heroku
+      - name: Push to Heroku
         run: git push heroku main
